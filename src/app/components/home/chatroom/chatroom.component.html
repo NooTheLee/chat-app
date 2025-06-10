@@ -1,0 +1,58 @@
+<!-- Header -->
+<div class="p-4 flex justify-between items-center border-b border-green-500">
+  <h2 class="text-lg font-bold uppercase">CONTACTS</h2>
+  <div class="flex gap-2">
+    <button class="hover:bg-green-900 p-1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+        />
+      </svg>
+    </button>
+    <button class="hover:bg-green-900 p-1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 4.5v15m7.5-7.5h-15"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Contact List -->
+<div class="overflow-y-auto flex-1">
+  <div
+    *ngFor="let cr of chatrooms"
+    class="flex items-center p-3 hover:bg-green-900 cursor-pointer border-b border-green-500/30"
+    [class.bg-green-900]="true"
+  >
+    <div
+      class="mr-3 w-8 h-8 flex items-center justify-center border border-green-500"
+    >
+      <span class="text-sm font-bold">{{getChatName(cr)?.[0] || 'NaN'}}</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="font-bold truncate">{{getChatName(cr)}}</p>
+      <p class="text-sm text-green-300 truncate">{{getLastMessenger(cr.messages)}}</p>
+    </div>
+    <div class="text-xs text-green-300">12:25</div>
+  </div>
+</div>
