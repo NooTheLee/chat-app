@@ -1,10 +1,15 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-.chat.chat-start > .chat-bubble{
-    background-color: #2A2E35 !important;
+/* Apply IBM Plex Mono to code elements */
+* {
+  font-family: 'IBM Plex Mono', monospace;
 }
 
-.chat.chat-end > .chat-bubble{
-    background-color: #10B981 !important;
+input {
+    color: white !important;
+}
+
+input::placeholder {
+    color: #adadad !important;
 }

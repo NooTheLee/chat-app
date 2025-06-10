@@ -25,6 +25,7 @@
               }
             ],
             "styles": [
+              "src/font.css",
               "src/styles.css"
             ]
           },

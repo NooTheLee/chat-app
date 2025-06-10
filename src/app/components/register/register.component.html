@@ -1,81 +1,125 @@
-<div class="container mx-auto p-4 max-w-md">
-  <h1 class="text-3xl font-bold mb-6 text-center">Register</h1>
-  
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-        Username
-      </label>
-      <input 
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-        id="username" 
-        type="text" 
-        formControlName="username"
-        placeholder="Username">
-      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-red-500 text-xs mt-1">
-        Username is required and must be at least 4 characters
-      </div>
+<div class="min-h-screen bg-black flex items-center justify-center p-4 font-mono text-white">
+  <div class="w-full max-w-md border-2 border-green-500 p-6">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold uppercase mb-1">NEW USER REGISTRATION</h1>
+      <div class="text-green-300 text-sm">SECURE CONNECTION ESTABLISHED</div>
     </div>
     
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-        Email
-      </label>
-      <input 
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-        id="email" 
-        type="email" 
-        formControlName="email"
-        placeholder="Email">
-      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-xs mt-1">
-        Please enter a valid email address
-      </div>
-    </div>
+    <div class="border-b-2 border-green-500 mb-6"></div>
     
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-        Password
-      </label>
-      <input 
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-        id="password" 
-        type="password" 
-        formControlName="password"
-        placeholder="******************">
-      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-xs mt-1">
-        Password is required and must be at least 6 characters
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div class="mb-4">
+        <div class="flex items-center mb-2">
+          <span class="text-green-300 mr-2">&gt;</span>
+          <label class="uppercase font-bold" for="username">
+            USERNAME:
+          </label>
+        </div>
+        <div class="flex border-2 border-green-500 bg-black">
+          <div class="text-green-300 p-2">&gt;</div>
+          <input 
+            class="w-full bg-black text-white p-2 focus:outline-none" 
+            id="username" 
+            type="text" 
+            formControlName="username"
+            placeholder="ENTER USERNAME">
+        </div>
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-red-500 text-xs mt-1 pl-6">
+          [ERROR]: USERNAME MUST BE AT LEAST 4 CHARACTERS
+        </div>
       </div>
-    </div>
-    
-    <div class="mb-6">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
-        Confirm Password
-      </label>
-      <input 
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-        id="confirmPassword" 
-        type="password" 
-        formControlName="confirmPassword"
-        placeholder="******************">
-      <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="text-red-500 text-xs mt-1">
-        Please confirm your password
+      
+      <div class="mb-4">
+        <div class="flex items-center mb-2">
+          <span class="text-green-300 mr-2">&gt;</span>
+          <label class="uppercase font-bold" for="email">
+            EMAIL:
+          </label>
+        </div>
+        <div class="flex border-2 border-green-500 bg-black">
+          <div class="text-green-300 p-2">&gt;</div>
+          <input 
+            class="w-full bg-black text-white p-2 focus:outline-none" 
+            id="email" 
+            type="email" 
+            formControlName="email"
+            placeholder="ENTER EMAIL">
+        </div>
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-xs mt-1 pl-6">
+          [ERROR]: INVALID EMAIL FORMAT
+        </div>
       </div>
-    </div>
+      
+      <div class="mb-4">
+        <div class="flex items-center mb-2">
+          <span class="text-green-300 mr-2">&gt;</span>
+          <label class="uppercase font-bold" for="password">
+            PASSWORD:
+          </label>
+        </div>
+        <div class="flex border-2 border-green-500 bg-black">
+          <div class="text-green-300 p-2">&gt;</div>
+          <input 
+            class="w-full bg-black text-white p-2 focus:outline-none" 
+            id="password" 
+            type="password" 
+            formControlName="password"
+            placeholder="******************">
+        </div>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-red-500 text-xs mt-1 pl-6">
+          [ERROR]: PASSWORD MUST BE AT LEAST 6 CHARACTERS
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <span class="text-green-300 mr-2">&gt;</span>
+          <label class="uppercase font-bold" for="confirmPassword">
+            CONFIRM PASSWORD:
+          </label>
+        </div>
+        <div class="flex border-2 border-green-500 bg-black">
+          <div class="text-green-300 p-2">&gt;</div>
+          <input 
+            class="w-full bg-black text-white p-2 focus:outline-none" 
+            id="confirmPassword" 
+            type="password" 
+            formControlName="confirmPassword"
+            placeholder="******************">
+        </div>
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="text-red-500 text-xs mt-1 pl-6">
+          [ERROR]: PASSWORD CONFIRMATION REQUIRED
+        </div>
+      </div>
+      
+      <!-- <div class="flex items-center justify-between pt-4 border-t-2 border-green-500">
+        <button 
+          class="bg-green-900 hover:bg-green-700 text-green-400 font-bold py-2 px-4 border-2 border-green-500 focus:outline-none" 
+          type="submit"
+          [disabled]="registerForm.invalid || loading">
+          {{loading ? "LOADING" : "CREATE ACCOUNT"}}
+        </button>
+        <a routerLink="/login" class="inline-block font-bold text-sm text-green-500 hover:text-green-300">
+          [EXISTING USER LOGIN]
+        </a>
+      </div> -->
+
+      <div class="flex items-center justify-between pt-4 border-t-2 border-green-500">
+        <button 
+          class="bg-green-900 flex items-center gap-x-3 min-w-[150px] justify-center hover:bg-green-700 text-green-400 font-bold py-2 px-4 border-2 border-green-500 focus:outline-none" 
+          type="submit"
+          [disabled]="registerForm.invalid || loading">
+          {{loading ? "LOADING" : "CREATE ACCOUNT"}}
+          <span *ngIf="loading" class="loading loading-spinner loading-sm" > </span>
+        </button>
+        <a routerLink="/login" class="inline-block font-bold text-sm text-green-500 hover:text-green-300">
+          [USER LOGIN]
+        </a>
+      </div>
+    </form>
     
-    <div class="flex items-center justify-between">
-      <button 
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-        type="submit"
-        [disabled]="registerForm.invalid">
-        Register
-      </button>
-      <a routerLink="/login" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-        Already have an account?
-      </a>
+    <div class="text-center mt-6 text-green-300 text-sm">
+      <a routerLink="/forgot-passowrd" class="hover:text-green-400">[FORGOT PASSWORD]</a>
     </div>
-  </form>
-  
-  <div class="text-center mt-4">
-    <a routerLink="/" class="text-blue-500 hover:text-blue-700">Back to Home</a>
   </div>
 </div> 
