@@ -64,21 +64,33 @@
   </div>
 
   <!-- Messages -->
-  <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-black">
-    <div class="mb-4 flex flex-col items-start">
+  <div
+    class="flex-1 overflow-y-auto p-4 space-y-4 bg-black"
+  >
+    <div
+    *ngFor="let message of chatMessages"
+      class="mb-4 flex flex-col"
+      [ngClass]="isYou(message) ? 'items-end' : 'items-start'"
+    >
       <div class="text-green-300 text-xs mb-1">
-        SYSTEM: MESSAGE SENT [12:46]
+        SYSTEM: MESSAGE SENT {{ convertDateTime(message.createdAt) }}
       </div>
       <div class="flex">
         <div class="border-2 px-2 py-1 border-white/70 mb-1">
-          <span class="text-green-300">&gt;ANAKIN: </span>
-          <span class="text-white">I love you!</span>
+          <span
+            class="text-green-300"
+            [ngClass]="isYou(message) ? 'hidden' : ''"
+            >&gt;ANAKIN:
+          </span>
+          <span class="text-white">{{ message.content }}</span>
         </div>
       </div>
-      <div class="text-green-300 text-xs">STATUS: SEEN AT 12:46</div>
+      <div class="text-green-300 text-xs">
+        STATUS: SEEN AT {{ convertDateTime(message.createdAt) }}
+      </div>
     </div>
 
-    <div class="mb-4 flex flex-col items-end">
+    <!-- <div class="mb-4 flex flex-col items-end">
       <div class="text-green-300 text-xs mb-1">
         SYSTEM: MESSAGE SENT [12:46]
       </div>
@@ -89,7 +101,7 @@
         </div>
       </div>
       <div class="text-green-300 text-xs">STATUS: SEEN AT 12:46</div>
-    </div>
+    </div> -->
   </div>
 
   <!-- Message Input -->

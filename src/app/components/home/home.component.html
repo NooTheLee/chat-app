@@ -1,12 +1,6 @@
-<div [ngClass]="{'dark-theme': darkMode$ | async}" class="grid grid-cols-8 w-screen bg-black gap-x-[0.3vw] p-[0.3vw] h-screen text-green-400 [&>*]:border-green-500 [&>*]:border-2 [&>*]:rounded-none font-mono">
+<div class="grid grid-cols-8 w-screen bg-black gap-x-[0.3vw] p-[0.3vw] h-screen text-green-400 [&>*]:border-green-500 [&>*]:border-2 [&>*]:rounded-none font-mono">
   <!-- Sidebar -->
   <div class="col-span-2 bg-black border-r border-green-500 md:flex flex-col">
-    <div class="p-2 flex justify-between items-center">
-      <span *ngIf="user$ | async as user">{{ user.displayName || user.username }}</span>
-      <button (click)="toggleDarkMode()" class="p-2">
-        {{ (darkMode$ | async) ? '☀️' : '🌙' }}
-      </button>
-    </div>
     <chat-room />
   </div>
   

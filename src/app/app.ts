@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Toast } from './shared/toast/toast.component';
+import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { isDevMode } from '@angular/core';
 
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, Toast],
-  template: '<router-outlet></router-outlet><toast></toast>'
-})
-export class App {
-  protected title = 'Client';
-}
+import { appReducer } from './store/app.reducer';
+
+// Export the NgRx store providers
+export const appStoreProviders = [
+  provideStore({ app: appReducer }),
+  provideStoreDevtools({
+    maxAge: 25,
+    logOnly: !isDevMode(),
+    autoPause: true,
+  })
+];
+
+// This file is now only used for exporting providers
+// The actual bootstrapping is done in main.ts

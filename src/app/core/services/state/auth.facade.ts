@@ -2,31 +2,31 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { User } from '../store/models/user.model';
-import * as AppActions from '../store/app.actions';
-import * as AppSelectors from '../store/app.selectors';
+import { ChatUserDto } from '../../../models';
+import * as AppActions from '../../../store/app.actions';
+import * as AppSelectors from '../../../store/app.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthStateService {
   constructor(private store: Store) {}
 
   // Selectors
-  get currentUser$(): Observable<User | null> {
+  get user$(): Observable<ChatUserDto | null> {
     return this.store.select(AppSelectors.selectUser);
   }
 
-  get isAuthenticated$(): Observable<boolean> {
-    return this.store.select(AppSelectors.selectIsAuthenticated);
+  get userId$(): Observable<string> {
+    return this.store.select(AppSelectors.selectUserId);
   }
 
   // Actions
-  login(user: User): void {
+  setUser(user: ChatUserDto): void {
     this.store.dispatch(AppActions.setUser({ user }));
   }
 
-  updateUserProfile(userData: Partial<User>): void {
+  updateUserProfile(userData: Partial<ChatUserDto>): void {
     this.store.dispatch(AppActions.updateUser({ user: userData }));
   }
 
