@@ -6,10 +6,32 @@
   font-family: 'IBM Plex Mono', monospace;
 }
 
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+chat-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 input {
     color: white !important;
 }
 
 input::placeholder {
     color: #adadad !important;
+}
+
+/* styles.css hoặc global.css */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

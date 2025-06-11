@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-type ToastType = 'success' | 'error' | 'warning' | 'infor';
-
-export interface ToastData {
-  content: string;
-  type: ToastType;
-}
+import { Store } from '@ngrx/store';
+import { AppState, ToastType } from '../../store/app.state';
+import { showToast, hideToast } from '../../store/app.actions';
+import { selectToast } from '../../store/app.selectors';
+import { Observable } from 'rxjs';
+import { ToastData } from '../../store/app.state';
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  private toastSubject = new BehaviorSubject<ToastData | null>(null);
+  constructor(private store: Store<{ app: AppState }>) {}
+  
+  get toast$(): Observable<ToastData | null> {
+    return this.store.select(selectToast);
+  }
 
-  toast$ = this.toastSubject.asObservable();
-
-  show = (content: string, type: ToastType, time = 3000) => {
-    this.toastSubject.next({ content, type });
+  show = (content: string, toastType: ToastType = 'success', time = 3000) => {
+    this.store.dispatch(showToast({ content, toastType, time }));
 
     setTimeout(() => {
-      this.toastSubject.next(null);
+      this.store.dispatch(hideToast());
     }, time);
   };
 }

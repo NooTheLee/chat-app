@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthStateService } from '../core';
+import { Toast } from '../shared';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
-  template: `<router-outlet></router-outlet>`,
+  imports: [RouterOutlet, CommonModule, Toast],
+  template: `<router-outlet></router-outlet>
+  <toast > </toast>
+  `,
 })
 export class AppComponent implements OnInit {
   protected title = 'Client';

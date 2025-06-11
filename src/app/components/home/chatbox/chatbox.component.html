@@ -1,15 +1,20 @@
-<div class="flex flex-col h-full">
+<div class="flex flex-col h-full w-full">
   <!-- Chat Header -->
-  <div class="p-4 border-b border-green-500 flex justify-between items-center">
+  <div
+    class="p-4 border-b border-green-500 flex justify-between items-center flex-shrink-0"
+  >
     <div class="flex items-center">
       <div
         class="mr-3 w-8 h-8 flex items-center justify-center border border-green-500"
       >
-        <span class="text-sm font-bold">DM</span>
+        <span
+          class="text-sm font-bold"
+          >{{otherProfile?.avatarUrl ?? getShowingName()?.[0]}}</span
+        >
       </div>
       <div>
-        <h3 class="font-bold uppercase">Damon Mccarty</h3>
-        <p class="text-xs text-green-300">LAST ACTIVE: 8 MIN AGO</p>
+        <h3 class="font-bold uppercase">{{ getShowingName() }}</h3>
+        <p class="text-xs text-green-300">LAST ACTIVE: ?? MIN AGO</p>
       </div>
     </div>
     <div class="flex gap-3">
@@ -64,108 +69,37 @@
   </div>
 
   <!-- Messages -->
-  <div
-    class="flex-1 overflow-y-auto p-4 space-y-4 bg-black"
-  >
+  <div #messagesContainer class="flex-grow flex-shrink-1 max-h-[80vh] overflow-y-auto p-4 space-y-4 bg-black scrollbar-hide" style="min-height: 0;">
     <div
-    *ngFor="let message of chatMessages"
+      *ngFor="let message of chatMessages"
       class="mb-4 flex flex-col"
       [ngClass]="isYou(message) ? 'items-end' : 'items-start'"
     >
-      <div class="text-green-300 text-xs mb-1">
-        SYSTEM: MESSAGE SENT {{ convertDateTime(message.createdAt) }}
-      </div>
+    <div class="text-green-300 text-xs mb-1">
+      SYSTEM: MESSAGE SENT
+    </div>
       <div class="flex">
         <div class="border-2 px-2 py-1 border-white/70 mb-1">
           <span
             class="text-green-300"
             [ngClass]="isYou(message) ? 'hidden' : ''"
-            >&gt;ANAKIN:
+            >&gt;{{ message.sender.displayName ?? message.sender.username }}:
           </span>
           <span class="text-white">{{ message.content }}</span>
         </div>
       </div>
-      <div class="text-green-300 text-xs">
-        STATUS: SEEN AT {{ convertDateTime(message.createdAt) }}
+      <div class="text-white text-xs mb-1">
+        // {{ convertDateTime(message.createdAt) }}
       </div>
     </div>
-
-    <!-- <div class="mb-4 flex flex-col items-end">
-      <div class="text-green-300 text-xs mb-1">
-        SYSTEM: MESSAGE SENT [12:46]
-      </div>
-      <div class="flex">
-        <div class="border-2 px-2 py-1 border-white/70 mb-1">
-          <span class="text-green-300 hidden">&gt;ANAKIN:</span>
-          <span class="text-white">I hate you!</span>
-        </div>
-      </div>
-      <div class="text-green-300 text-xs">STATUS: SEEN AT 12:46</div>
-    </div> -->
   </div>
 
   <!-- Message Input -->
-  <div class="p-4 border-t border-green-500">
-    <div class="flex items-center bg-black border border-green-500 px-4 py-2">
-      <div class="text-green-300 mr-2">&gt;</div>
-      <input
-        type="text"
-        placeholder="ENTER MESSAGE..."
-        class="flex-1 bg-transparent border-none focus:outline-none text-green-400 placeholder-green-700"
-        [(ngModel)]="message"
-        (change)="onChange(message)"
-        (blur)="onBlur()"
-      />
-      <div class="flex gap-2">
-        <button class="hover:bg-green-900 p-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z"
-            />
-          </svg>
-        </button>
-        <button class="hover:bg-green-900 p-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"
-            />
-          </svg>
-        </button>
-        <button class="bg-green-700 hover:bg-green-800 p-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
+  <div class="flex-shrink-0 border-t border-green-500">
+    <message-input
+      [userId]="userId"
+      (onChangeF)="onChangeF()"
+      (onBlurF)="onBlurF()"
+    ></message-input>
   </div>
 </div>

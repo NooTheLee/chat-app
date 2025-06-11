@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastService, ToastData } from './toast.service';
+import { ToastService } from './toast.service';
+import { ToastData } from '../../store/app.state';
 
 @Component({
     selector: 'toast',
     standalone: true,
     imports: [CommonModule],
     template: `
-        <div *ngIf="!!toast?.type && !!toast?.content" class="toast toast-top toast-end">
-            <div class="alert" [ngClass]="'alert-' + toast?.type">
+        <div *ngIf="!!toast?.toastType && !!toast?.content" class="toast toast-top toast-end">
+            <div class="alert" [ngClass]="'alert-' + toast?.toastType">
                 <span>{{toast?.content}}</span>
             </div>
         </div>

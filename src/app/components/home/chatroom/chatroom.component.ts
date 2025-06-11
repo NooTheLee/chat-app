@@ -7,6 +7,8 @@ import {
   ChatRoomDto,
   ChatMessageDto,
 } from '../../../models';
+import { ToastService } from '../../../shared/toast/toast.service';
+import { DateTimeUtils } from '../../../shared';
 
 @Component({
   selector: 'chat-room',
@@ -18,11 +20,14 @@ export class ChatRoom implements OnInit {
   chatrooms: ChatRoomDtos = [];
   loading: boolean = false;
   userId: string = '';
+  currentChatRoomId: string = '';
+  isAddNew: boolean = false;
 
   constructor(
     private chatRoomService: ChatRoomService,
     private authStateService: AuthStateService,
     private chatRoomsStateService: ChatRoomsStateService,
+    private toast: ToastService,
   ) {}
 
   // ComponentDidMount
@@ -33,6 +38,9 @@ export class ChatRoom implements OnInit {
     });
     this.chatRoomsStateService.chatrooms$.subscribe(cr => {
       this.chatrooms = cr;
+    })
+    this.chatRoomsStateService.currentChatRoomId$.subscribe(crId => {
+      this.currentChatRoomId = crId;
     })
   }
 
@@ -45,14 +53,9 @@ export class ChatRoom implements OnInit {
           this.loading = false;
         })
       )
-      .subscribe({
-        next: (response: ChatRoomDtos) => {
-          this.chatRoomsStateService.setChatRooms(response);
-          this.chatRoomsStateService.setCurrentId(response[0].id);
-        },
-        error: (error) => {
-          console.error('Error loading chatrooms:', error);
-        },
+      .subscribe((response: ChatRoomDtos) => {
+        this.chatRoomsStateService.setChatRooms(response);
+        this.chatRoomsStateService.setCurrentChatRoomId(response[0].id);
       });
   }
 
@@ -78,4 +81,20 @@ export class ChatRoom implements OnInit {
 
     return `${lastSender}: ${content}`;
   };
+
+  getLastMessengerTime = (messages: ChatMessageDto[]) => {
+    const lastMessage: ChatMessageDto = messages[messages.length - 1];
+    const { createdAt } = lastMessage;
+    return DateTimeUtils.convertDateTime(createdAt);
+  };
+
+  onAddNew = () => {
+    this.isAddNew = true;
+    this.chatRoomsStateService.setCurrentChatRoomId("");
+  }
+
+  onSlectChatRoom = (crId: string): void => {
+    this.chatRoomsStateService.setCurrentChatRoomId(crId);
+    this.isAddNew = false;
+  }
 }

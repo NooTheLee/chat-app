@@ -36,18 +36,8 @@ export const selectCurrentChatRoomId = createSelector(
   (state: AppState) => state.currentChatRoomId
 );
 
-export const selectMessagesByChatroomId = (
-  chatroomId: string
-): MemoizedSelector<object, ChatMessageDto[]> =>
-  createSelector(
-    selectChatRooms,
-    (chatrooms) => chatrooms.find((cr) => cr.id === chatroomId)?.messages || []
-  );
-
-export const selectMemberByChatroomId = (
-  chatroomId: string
-): MemoizedSelector<object, ChatUserDto[]> =>
-  createSelector(
-    selectChatRooms,
-    (chatrooms) => chatrooms.find((cr) => cr.id == chatroomId)?.members || []
-  );
+// Toast selectors
+export const selectToast = createSelector(
+  selectAppState,
+  (state: AppState) => state.toast
+);

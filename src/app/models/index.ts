@@ -33,3 +33,9 @@ export interface ChatRoomDto {
 }
 
 export type ChatRoomDtos = ChatRoomDto[];
+
+export interface MessageRequestDto {
+  chatRoomId: string;
+  content: string;
+  messageType?: number;
+}

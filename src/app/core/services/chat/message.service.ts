@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../base/base.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { BaseService } from '../base/base.service';
+import { ChatMessageDto, MessageRequestDto } from '../../../models';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { Router } from '@angular/router';
-
-interface ResponseDto {
-  token: string;
-  user: any;
-}
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService extends BaseService {
+export class MessageService extends BaseService {
+
   constructor(http: HttpClient, router: Router, toast: ToastService) {
     super(http, router, toast);
   }
 
-  login(username: string, password: string): Observable<ResponseDto> {
-    return this.post<ResponseDto>('Auth/login', { username, password });
+  sentMessage = (requestDto: MessageRequestDto): Observable<ChatMessageDto> => {
+    return this.post<ChatMessageDto>('Message/create', requestDto)
   }
+
 }
