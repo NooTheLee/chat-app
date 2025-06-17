@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../base/base.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ToastService } from '../../../shared/toast/toast.service';
+import { ToastService } from '@/shared';
 import { Router } from '@angular/router';
 
 type ResponseDto = string | undefined;

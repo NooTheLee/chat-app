@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { AuthStateService, ChatRoomsStateService } from "../../../core";
-import { ChatUserDto } from "../../../models";
+//
+import { ChatRoomsStateService } from "@/core";
+import { ChatUserDto } from "@/models";
 
 @Component({
   selector: 'details-component',

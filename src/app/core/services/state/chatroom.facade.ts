@@ -7,9 +7,9 @@ import {
   ChatRoomDto,
   ChatRoomDtos,
   ChatUserDto,
-} from '../../../models';
-import * as AppActions from '../../../store/app.actions';
-import * as AppSelectors from '../../../store/app.selectors';
+} from '@/models';
+import * as AppActions from '@/store/app.actions';
+import * as AppSelectors from '@/store/app.selectors';
 import { AuthStateService } from './auth.facade';
 
 @Injectable({
@@ -28,6 +28,10 @@ export class ChatRoomsStateService {
 
   get currentChatRoomId$(): Observable<string> {
     return this.store.select(AppSelectors.selectCurrentChatRoomId);
+  }
+
+  get isAddNewChatRoom$(): Observable<boolean> {
+    return this.store.select(AppSelectors.selectIsAddNewChatRoom);
   }
 
   getCurrentChatRoom(): Observable<ChatRoomDto | undefined> {
@@ -49,7 +53,11 @@ export class ChatRoomsStateService {
   }
 
   getOtherMember(): Observable<ChatUserDto | undefined> {
-    return combineLatest([this.chatrooms$, this.currentChatRoomId$, this.authStateService.userId$]).pipe(
+    return combineLatest([
+      this.chatrooms$,
+      this.currentChatRoomId$,
+      this.authStateService.userId$,
+    ]).pipe(
       map(([chatrooms, currentId, userId]) => {
         return chatrooms
           .find((cr) => cr.id === currentId)
@@ -74,4 +82,8 @@ export class ChatRoomsStateService {
   addNewMessageToCurrentChatRoom(newMessage: ChatMessageDto): void {
     this.store.dispatch(AppActions.addNewMessage({ newMessage }));
   }
+
+  setIsAddNewChatRoom = (isAddNewChatRoom: boolean): void => {
+    this.store.dispatch(AppActions.setIsAddNewChatRoom({ isAddNewChatRoom }));
+  };
 }

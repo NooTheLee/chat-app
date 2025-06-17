@@ -3,9 +3,9 @@ import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { isDevMode } from '@angular/core';
 
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/components';
-import { appReducer } from './app/store/app.reducer';
+import { appConfig } from '@/app.config';
+import { AppComponent } from '@/components';
+import { appReducer } from '@/store/app.reducer';
 
 // Extend the appConfig with NgRx store providers
 const providers = [

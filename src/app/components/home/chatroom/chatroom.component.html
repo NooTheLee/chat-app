@@ -18,10 +18,7 @@
         />
       </svg>
     </button>
-    <button class="hover:bg-green-900 p-2"
-    name="addNew"
-    (click)="onAddNew()"
-    >
+    <button class="hover:bg-green-900 p-2" name="addNew" (click)="onAddNew()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -44,13 +41,10 @@
 <div class="overflow-y-auto flex-1">
   <!-- Add new mode -->
   <div
-    *ngIf="isAddNew"
+    *ngIf="isAddNewChatRoom"
     class="flex items-center p-3 hover:bg-green-900 bg-green-900 cursor-pointer border-b border-green-500/30"
   >
-    <div
-      class="mr-3 w-8 h-8 "
-    >
-    </div>
+    <div class="mr-3 w-8 h-8"></div>
     <div class="flex-1 min-w-0">
       <p class="font-bold truncate">New message</p>
     </div>
@@ -58,7 +52,7 @@
 
   <!-- From API -->
   <div
-    *ngFor="let cr of chatrooms"
+    *ngFor="let cr of chatrooms; let i = index"
     class="flex items-center p-3 hover:bg-green-900 cursor-pointer border-b border-green-500/30"
     [class.bg-green-900]="cr.id === currentChatRoomId"
     (click)="onSlectChatRoom(cr.id)"
@@ -69,9 +63,14 @@
       <span class="text-sm font-bold">{{getChatName(cr)?.[0] || 'NaN'}}</span>
     </div>
     <div class="flex-1 min-w-0">
-      <p class="font-bold truncate">{{getChatName(cr)}}</p>
-      <p class="text-sm text-white truncate">{{getLastMessenger(cr.messages)}}</p>
+      <p class="font-bold truncate">{{ getChatName(cr) }}</p>
+      <p class="text-sm text-white truncate">
+        {{ getLastMessenger(cr.messages) }}
+      </p>
     </div>
-    <div class="text-xs text-green-300">{{getLastMessengerTime(cr.messages)}}</div>
+    <div class="text-xs text-green-300 mr-2">
+      {{ getLastMessengerTime(cr.messages) }}
+    </div>
+    <context-dropdown [id]="cr.id + '-' + i"></context-dropdown>
   </div>
 </div>

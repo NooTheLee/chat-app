@@ -8,6 +8,8 @@ export const initialState: AppState = {
   chatrooms: [],
   currentChatRoomId: '',
   toast: null,
+  loading: false,
+  isAddNewChatRoom: false,
 };
 
 export const appReducer = createReducer(
@@ -39,6 +41,11 @@ export const appReducer = createReducer(
     ...state,
     currentChatRoomId: id,
   })),
+  
+  on(AppActions.setIsAddNewChatRoom, (state, { isAddNewChatRoom }) => ({
+    ...state,
+    isAddNewChatRoom,
+  })),
 
   // Toast reducers
   on(AppActions.showToast, (state, { content, toastType }) => ({
@@ -53,8 +60,6 @@ export const appReducer = createReducer(
 
   on(AppActions.addNewMessage, (state, { newMessage }) => {
     try {
-      console.log('newMessage', newMessage);
-
       const newChatRoom = state.chatrooms.map((cr) => {
         if (cr.id === state.currentChatRoomId) {
           return {
@@ -75,5 +80,10 @@ export const appReducer = createReducer(
         ...state,
       };
     }
-  })
+  }),
+
+  on(AppActions.setLoading, (state, { loading }) => ({
+    ...state,
+    loading,
+  })),
 );

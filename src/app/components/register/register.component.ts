@@ -7,8 +7,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RegisterService } from '../../core';
-import { ToastService } from '../../shared/toast/toast.service';
+import { RegisterService } from '@/core';
+import { ToastService } from '@/shared';
 import { finalize } from 'rxjs';
 
 @Component({

@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { BaseService } from '../base/base.service';
-import { ChatRoomDtos } from '../../../models';
-import { ToastService } from '../../../shared/toast/toast.service';
+import { ChatRoomDtos } from '@/models';
+import { ToastService } from '@/shared';
 import { Router } from '@angular/router';
 
 @Injectable({

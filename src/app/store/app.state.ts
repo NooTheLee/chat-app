@@ -1,5 +1,4 @@
-import { ChatUserDto } from '../models';
-import { ChatRoomDtos } from '../models';
+import { ChatUserDto, ChatRoomDtos } from '@/models';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'infor';
 
@@ -14,4 +13,6 @@ export interface AppState {
   chatrooms: ChatRoomDtos | [],
   currentChatRoomId: string;
   toast: ToastData | null;
+  loading: boolean;
+  isAddNewChatRoom: boolean;
 }

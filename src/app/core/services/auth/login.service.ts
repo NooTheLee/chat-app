@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../base/base.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ToastService } from '../../../shared/toast/toast.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+//
+import { BaseService } from '../base/base.service';
+import { ToastService } from '@/shared';
 
 interface ResponseDto {
   token: string;

@@ -2,7 +2,7 @@ import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { isDevMode } from '@angular/core';
 
-import { appReducer } from './store/app.reducer';
+import { appReducer } from '@/store/app.reducer';
 
 // Export the NgRx store providers
 export const appStoreProviders = [

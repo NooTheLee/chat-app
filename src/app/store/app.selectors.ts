@@ -1,10 +1,8 @@
 import {
   createSelector,
   createFeatureSelector,
-  MemoizedSelector,
 } from '@ngrx/store';
 import { AppState } from './app.state';
-import { ChatUserDto, ChatMessageDto } from '../models';
 
 // Feature selector
 export const selectAppState = createFeatureSelector<AppState>('app');
@@ -36,8 +34,19 @@ export const selectCurrentChatRoomId = createSelector(
   (state: AppState) => state.currentChatRoomId
 );
 
+export const selectIsAddNewChatRoom = createSelector(
+  selectAppState,
+  (state: AppState) => state.isAddNewChatRoom
+);
+
 // Toast selectors
 export const selectToast = createSelector(
   selectAppState,
   (state: AppState) => state.toast
+);
+
+// loading selectors
+export const selectLoading = createSelector(
+  selectAppState,
+  (state: AppState) => state.loading
 );

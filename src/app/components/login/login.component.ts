@@ -8,8 +8,8 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { AuthStateService, LoginService } from '../../core';
-import { ToastService } from '../../shared/toast/toast.service';
+import { AuthStateService, LoginService } from '@/core';
+import { ToastService } from '@/shared';
 import { finalize } from 'rxjs';
 
 @Component({

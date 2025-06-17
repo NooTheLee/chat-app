@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { environment } from '../../../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ToastService } from '../../../shared/toast/toast.service';
+import { ToastService } from '@/shared';
 import { Router } from '@angular/router';
 
 export class BaseService {
@@ -43,6 +43,7 @@ export class BaseService {
   protected get<T>(endpoint: string): Observable<T> {
     return this.http.get<T>(`${this.apiUrl}/${endpoint}`, {
       headers: this.createHeaders(),
+      withCredentials: true
     }).pipe(
       catchError((error) => this.handleError(error))
     );
@@ -51,6 +52,7 @@ export class BaseService {
   protected post<T>(endpoint: string, body: any): Observable<T> {
     return this.http.post<T>(`${this.apiUrl}/${endpoint}`, body, {
       headers: this.createHeaders(),
+      withCredentials: true
     }).pipe(
       catchError((error) => this.handleError(error))
     );
@@ -59,6 +61,7 @@ export class BaseService {
   protected put<T>(endpoint: string, body: any): Observable<T> {
     return this.http.put<T>(`${this.apiUrl}/${endpoint}`, body, {
       headers: this.createHeaders(),
+      withCredentials: true
     }).pipe(
       catchError((error) => this.handleError(error))
     );
@@ -67,6 +70,7 @@ export class BaseService {
   protected delete<T>(endpoint: string): Observable<T> {
     return this.http.delete<T>(`${this.apiUrl}/${endpoint}`, {
       headers: this.createHeaders(),
+      withCredentials: true
     }).pipe(
       catchError((error) => this.handleError(error))
     );

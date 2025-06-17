@@ -1,0 +1,31 @@
+<!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
+<button
+  class="btn btn-circle"
+  [attr.popovertarget]="'popover-' + id"
+  [style.anchor-name]="'--anchor-' + id"
+>
+  <svg
+    viewBox="6 6 24 24"
+    fill="currentColor"
+    width="16"
+    height="16"
+    aria-hidden="true"
+    class="xfx01vb x1lliihq x1tzjh5l x1k90msu x2h7rmj x1qfuztq"
+    overflow="visible"
+    style="--color: var(--primary-icon)"
+  >
+    <path
+      d="M12.5 18A2.25 2.25 0 1 1 8 18a2.25 2.25 0 0 1 4.5 0zM20.25 18a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0zM25.75 20.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5z"
+    ></path>
+  </svg>
+</button>
+<ul
+  class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+  popover
+  [id]="'popover-' + id"
+  [style.position-anchor]="'--anchor-' + id"
+>
+  <li><a>Information</a></li>
+  <li><a>Block user</a></li>
+  <li><a>Delete</a></li>
+</ul>

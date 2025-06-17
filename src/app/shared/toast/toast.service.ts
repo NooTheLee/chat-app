@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState, ToastType } from '../../store/app.state';
-import { showToast, hideToast } from '../../store/app.actions';
-import { selectToast } from '../../store/app.selectors';
 import { Observable } from 'rxjs';
-import { ToastData } from '../../store/app.state';
+//
+import { AppState, ToastType } from '@/store/app.state';
+import { showToast, hideToast } from '@/store/app.actions';
+import { selectToast } from '@/store/app.selectors';
+import { ToastData } from '@/store/app.state';
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { ChatUserDto, ChatRoomDtos, ChatMessageDto } from '../models';
-import { ToastData, ToastType } from './app.state';
+import { ChatUserDto, ChatRoomDtos, ChatMessageDto } from '@/models';
+import { ToastType } from './app.state';
 
 // User Actions
 export const setUser = createAction(
@@ -38,6 +38,12 @@ export const setCurrentChatRoomId = createAction(
   props<{ id: string }>()
 );
 
+export const setIsAddNewChatRoom = createAction(
+  '[Chatroom] Set is new chat room',
+  props<{ isAddNewChatRoom: boolean }>()
+);
+
+
 // Toast Actions
 export const showToast = createAction(
   '[Toast] Show Toast',
@@ -52,4 +58,10 @@ export const hideToast = createAction(
 export const addNewMessage = createAction(
   '[Message] Add new message',
   props<{ newMessage: ChatMessageDto }>()
+);
+
+// Loading Actions
+export const setLoading = createAction(
+  '[Loading] Set loading',
+  props<{ loading: boolean }>()
 );

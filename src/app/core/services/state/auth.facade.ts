@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { ChatUserDto } from '../../../models';
-import * as AppActions from '../../../store/app.actions';
-import * as AppSelectors from '../../../store/app.selectors';
+import { ChatUserDto } from '@/models';
+import * as AppActions from '@/store/app.actions';
+import * as AppSelectors from '@/store/app.selectors';
 
 @Injectable({
   providedIn: 'root'

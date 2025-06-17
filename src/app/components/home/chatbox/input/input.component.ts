@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService } from '../../../../core/services/chat/message.service';
-import { ChatRoomsStateService } from '../../../../core';
 import { finalize } from 'rxjs';
+//
+import { ChatRoomsStateService, MessageService } from '@/core';
 
 @Component({
   selector: 'message-input',
@@ -49,8 +49,6 @@ export class MessageInput {
     }).pipe(finalize(() => {
         this.loading = false;
     })).subscribe(response => {
-        console.log('response', response);
-        
         this.chatroomStateService.addNewMessageToCurrentChatRoom(response);
         this.message = "";
     })

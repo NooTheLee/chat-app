@@ -1,33 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs';
-import { AuthStateService, ChatRoomService, ChatRoomsStateService } from '../../../core';
+import { filter, finalize, take } from 'rxjs';
 import {
-  ChatRoomDtos,
-  ChatRoomDto,
-  ChatMessageDto,
-} from '../../../models';
-import { ToastService } from '../../../shared/toast/toast.service';
-import { DateTimeUtils } from '../../../shared';
+  AuthStateService,
+  ChatRoomService,
+  ChatRoomsStateService,
+} from '@/core';
+import { ChatRoomDtos, ChatRoomDto, ChatMessageDto } from '@/models';
+import { DateTimeUtils, LoadingService } from '@/shared';
+import { ContextDropdown } from './contextDropdown/context-dropdown'
 
 @Component({
   selector: 'chat-room',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ContextDropdown],
   templateUrl: 'chatroom.component.html',
 })
 export class ChatRoom implements OnInit {
   chatrooms: ChatRoomDtos = [];
-  loading: boolean = false;
+  // loading: boolean = false;
   userId: string = '';
   currentChatRoomId: string = '';
-  isAddNew: boolean = false;
+  isAddNewChatRoom: boolean = false;
 
   constructor(
     private chatRoomService: ChatRoomService,
     private authStateService: AuthStateService,
     private chatRoomsStateService: ChatRoomsStateService,
-    private toast: ToastService,
+    private loadingService: LoadingService
   ) {}
 
   // ComponentDidMount
@@ -36,26 +36,36 @@ export class ChatRoom implements OnInit {
     this.authStateService.userId$.subscribe((userId) => {
       this.userId = userId;
     });
-    this.chatRoomsStateService.chatrooms$.subscribe(cr => {
+    this.chatRoomsStateService.chatrooms$.subscribe((cr) => {
       this.chatrooms = cr;
-    })
-    this.chatRoomsStateService.currentChatRoomId$.subscribe(crId => {
+    });
+    this.chatRoomsStateService.currentChatRoomId$.subscribe((crId) => {
       this.currentChatRoomId = crId;
-    })
+    });
+    this.chatRoomsStateService.isAddNewChatRoom$.subscribe((isNew) => {
+      this.isAddNewChatRoom = isNew;
+    });
   }
 
   loadChatrooms(): void {
-    this.loading = true;
+    this.loadingService.setLoading(true);
     this.chatRoomService
       .getAll()
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.loadingService.setLoading(false);
         })
       )
       .subscribe((response: ChatRoomDtos) => {
         this.chatRoomsStateService.setChatRooms(response);
-        this.chatRoomsStateService.setCurrentChatRoomId(response[0].id);
+        this.chatRoomsStateService.chatrooms$
+          .pipe(
+            filter((cr) => cr.length > 0),
+            take(1)
+          )
+          .subscribe(() => {
+            this.chatRoomsStateService.setCurrentChatRoomId(response[0].id);
+          });
       });
   }
 
@@ -72,7 +82,9 @@ export class ChatRoom implements OnInit {
 
   getLastMessenger = (messages: ChatMessageDto[]) => {
     const lastMessage: ChatMessageDto = messages[messages.length - 1];
-    const { sender, content } = lastMessage;
+    const { sender, content } = lastMessage || {};
+
+    if (!sender || !sender) return '';
 
     const userId = this.userId;
 
@@ -84,17 +96,17 @@ export class ChatRoom implements OnInit {
 
   getLastMessengerTime = (messages: ChatMessageDto[]) => {
     const lastMessage: ChatMessageDto = messages[messages.length - 1];
-    const { createdAt } = lastMessage;
+    const { createdAt } = lastMessage || {};
     return DateTimeUtils.convertDateTime(createdAt);
   };
 
   onAddNew = () => {
-    this.isAddNew = true;
-    this.chatRoomsStateService.setCurrentChatRoomId("");
-  }
+    this.chatRoomsStateService.setCurrentChatRoomId('');
+    this.chatRoomsStateService.setIsAddNewChatRoom(true);
+  };
 
   onSlectChatRoom = (crId: string): void => {
     this.chatRoomsStateService.setCurrentChatRoomId(crId);
-    this.isAddNew = false;
-  }
+    this.chatRoomsStateService.setIsAddNewChatRoom(false);
+  };
 }
