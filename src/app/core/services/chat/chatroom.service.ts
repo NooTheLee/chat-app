@@ -24,4 +24,8 @@ export class ChatRoomService extends BaseService {
   //   // Custom handling
   //   return super.handleError(error);
   // }
+
+  deleteChatroom = (id: string): Observable<void> => {
+    return this.delete<void>(`Chatroom/${id}`);
+  }
 }

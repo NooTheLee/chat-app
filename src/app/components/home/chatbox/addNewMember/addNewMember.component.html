@@ -1,7 +1,55 @@
-<input
-  type="text"
-  placeholder="ENTER NAME..."
-  class="flex-1 bg-transparent border-none focus:outline-none text-green-400 placeholder-green-700"
-  [(ngModel)]="text"
-  (keyup.enter)="onSubmit()"
-/>
+<div class="flex flex-col gap-y-2">
+  <div class="flex gap-x-2">
+    <div
+      *ngFor="let u of usersSelected"
+      class="cursor-pointer px-2 py-1 border-2 rounded-md border-white/30 flex items-center gap-x-2"
+    >
+      {{ u.displayName ?? u.username }}
+      <span class="btn btn-circle btn-sm" (click)="onDeleteUserSelected(u.id)">x</span>
+    </div>
+  </div>
+  <div class="w-full flex justify-between">
+    <input
+      type="text"
+      placeholder="ENTER NAME..."
+      class="flex-1 bg-transparent border-none focus:outline-none text-green-400 placeholder-green-700"
+      [value]="search()"
+      (input)="onChangeInput($event)"
+      (keyup.enter)="onSubmit()"
+    />
+    <button
+      class="disabled:opacity-60"
+      (click)="onDeleteText()"
+      [disabled]="!textDebounce().length"
+    >
+      <svg
+        class="w-6 h-6 text-gray-800 cursor-pointer dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>
+    </button>
+    <span *ngIf="loading" class="ml-1 loading loading-sm"></span>
+  </div>
+  <div *ngIf="usersSearched.length" class="flex gap-x-2 relative">
+    <ul
+      tabindex="0"
+      class="absolute top-[100%] dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+    >
+      <li *ngFor="let user of usersSearched" (click)="onSelectUser(user)">
+        <a> {{ user.displayName ?? user.username }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

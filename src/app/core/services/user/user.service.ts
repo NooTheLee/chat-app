@@ -15,7 +15,7 @@ export class UserService extends BaseService {
         super(http, router, toast)
     }
 
-    search = (query: string) : Observable<ChatUserDto> => {
-        return this.get<ChatUserDto>(`/User/search?q=${query}`);
+    search = (query: string) : Observable<ChatUserDto[]> => {
+        return this.get<ChatUserDto[]>(`User/search?q=${query}`);
     }
 }

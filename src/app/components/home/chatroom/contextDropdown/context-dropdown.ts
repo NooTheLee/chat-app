@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+//
+import { ChatRoomDto } from '@/models';
 
 @Component({
     selector: 'context-dropdown',
@@ -9,4 +11,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ContextDropdown {
     @Input() id: string = '';
+    @Input() chatroomData!: ChatRoomDto;
+    
+    @Output() setCurrentDeleteChatroom = new EventEmitter<ChatRoomDto>();
+
+    onClickDeleteChatRoom() {
+        this.setCurrentDeleteChatroom.emit(this.chatroomData);
+    }
 }

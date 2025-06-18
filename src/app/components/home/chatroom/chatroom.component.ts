@@ -7,8 +7,8 @@ import {
   ChatRoomsStateService,
 } from '@/core';
 import { ChatRoomDtos, ChatRoomDto, ChatMessageDto } from '@/models';
-import { DateTimeUtils, LoadingService } from '@/shared';
-import { ContextDropdown } from './contextDropdown/context-dropdown'
+import { DateTimeUtils, LoadingService, ToastService } from '@/shared';
+import { ContextDropdown } from './contextDropdown/context-dropdown';
 
 @Component({
   selector: 'chat-room',
@@ -22,12 +22,14 @@ export class ChatRoom implements OnInit {
   userId: string = '';
   currentChatRoomId: string = '';
   isAddNewChatRoom: boolean = false;
+  chatRoomDeleteData: ChatRoomDto | null = null;
 
   constructor(
     private chatRoomService: ChatRoomService,
+    private loadingService: LoadingService,
+    private toast: ToastService,
     private authStateService: AuthStateService,
-    private chatRoomsStateService: ChatRoomsStateService,
-    private loadingService: LoadingService
+    private chatRoomsStateService: ChatRoomsStateService
   ) {}
 
   // ComponentDidMount
@@ -69,7 +71,8 @@ export class ChatRoom implements OnInit {
       });
   }
 
-  getChatName = (chatRoomDto: ChatRoomDto) => {
+  getChatName = (chatRoomDto: ChatRoomDto | null) => {
+    if (!chatRoomDto) return '';
     if (chatRoomDto.isGroup) {
       return 'J97';
     }
@@ -109,4 +112,35 @@ export class ChatRoom implements OnInit {
     this.chatRoomsStateService.setCurrentChatRoomId(crId);
     this.chatRoomsStateService.setIsAddNewChatRoom(false);
   };
+
+  setCurrentDeleteChatroom = (chatRoomData: ChatRoomDto) => {
+    this.chatRoomDeleteData = chatRoomData;
+  };
+
+  onDeleteChatRoom = () => {
+    console.log('this.chatRoomDeleteData', this.chatRoomDeleteData);
+    
+    if (this.chatRoomDeleteData) {
+      this.chatRoomService.deleteChatroom(this.chatRoomDeleteData.id).pipe(
+        finalize(() => {
+          this.toast.show('Delete chatroom successfully', 'infor');
+        })
+      ).subscribe(() => {
+        // Remove the deleted chatroom from the state
+        const updatedChatrooms = this.chatrooms.filter(cr => cr.id !== this.chatRoomDeleteData?.id);
+        this.chatRoomsStateService.setChatRooms(updatedChatrooms);
+        
+        // Select the first chatroom if available
+        if (updatedChatrooms.length > 0) {
+          this.chatRoomsStateService.setCurrentChatRoomId(updatedChatrooms[0].id);
+        }
+      });
+    }
+    this.onCloseModalConfirm();
+  };
+
+  onCloseModalConfirm = () => {
+    const btn = document.querySelector('form.modal-backdrop button') as HTMLButtonElement;
+    if (btn) btn.click();
+  }
 }
